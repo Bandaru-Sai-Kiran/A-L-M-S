@@ -338,108 +338,240 @@ body.dark-mode #logList li {
   color: #e0e0e0;
 }
 
-/* Mobile Responsiveness */
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+  color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* Header */
+header {
+  background: #333;
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2rem;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  justify-content: center;
+  background: #444;
+  padding: 0.5rem 0;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-size: 1rem;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main Content */
+main {
+  padding: 1rem;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+table th {
+  background: #333;
+  color: #fff;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  margin: 0.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.edit {
+  background: #28a745;
+  color: white;
+}
+
+button.delete {
+  background: #dc3545;
+  color: white;
+}
+
+button.borrow {
+  background: #007bff;
+  color: white;
+}
+
+button.return {
+  background: #ffc107;
+  color: black;
+}
+
+button.reserve {
+  background: #6c757d;
+  color: white;
+}
+
+/* Pagination Controls */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Scroll to Top Button */
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  header nav ul {
-      flex-direction: column;
-      gap: 0.5rem;
+  /* Adjust Header */
+  header h1 {
+    font-size: 1.5rem;
   }
 
-  .form-container {
-      padding: 1rem;
+  /* Adjust Table Layout */
+  table {
+    font-size: 0.9rem;
   }
 
-  form input, form select, form button {
-      font-size: 0.9rem;
-      padding: 0.6rem;
+  table th,
+  table td {
+    padding: 0.3rem;
+  }
+
+  /* Stack Buttons Vertically */
+  td button {
+    display: block;
+    margin: 0.2rem 0;
+  }
+
+  /* Adjust Navigation */
+  nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav a {
+    margin: 0.5rem 0;
+  }
+
+  /* Adjust Pagination */
+  .pagination {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pagination button {
+    margin: 0.2rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Further Simplify Layout */
+  header h1 {
+    font-size: 1.2rem;
   }
 
   table {
-      font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
-  .pagination-controls {
-      flex-direction: column;
-      gap: 0.5rem;
+  /* Hide Non-Essential Columns */
+  table th:nth-child(4),
+  table td:nth-child(4) {
+    display: none;
   }
-}
 
-/* Dashboard Styles */
-#dashboard {
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.8); /* Semi-transparent background for glassmorphism */
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
-  backdrop-filter: blur(10px); /* Glassmorphism effect */
-  margin-bottom: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem; /* Space between sections */
-}
+  table th:nth-child(5),
+  table td:nth-child(5) {
+    display: none;
+  }
 
-.dashboard-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
-  gap: 1.5rem;
-}
+  /* Convert Table Rows to Cards */
+  table tbody tr {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background: #fff;
+  }
 
-.stat {
-  background: rgba(255, 255, 255, 0.6); /* Frosted glass effect */
-  color: #333;
-  text-align: center;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  backdrop-filter: blur(10px); /* Glassmorphism effect */
-}
-
-.stat:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
-}
-
-.stat span:first-child {
-  display: block;
-  font-size: 1rem;
-  font-weight: normal;
-  opacity: 0.8;
-  margin-bottom: 0.5rem;
-}
-
-.stat span:last-child {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-}
-
-/* Analytics Chart Styles */
-#analyticsChart {
-  width: 100%;
-  height: auto;
-  max-height: 300px;
-  margin-top: 2rem;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
-  backdrop-filter: blur(10px); /* Glassmorphism effect */
-}
-
-/* Dark Mode Dashboard Styles */
-body.dark-mode #dashboard {
-  background: rgba(30, 30, 30, 0.8); /* Dark frosted glass */
-  color: #e0e0e0;
-}
-
-body.dark-mode .stat {
-  background: rgba(50, 50, 50, 0.6); /* Dark frosted glass */
-  color: #e0e0e0;
-}
-
-body.dark-mode .stat:hover {
-  box-shadow: 0 8px 12px rgba(255, 255, 255, 0.1), 0 2px 4px rgba(255, 255, 255, 0.06);
-}
-
-body.dark-mode #analyticsChart {
-  background: rgba(50, 50, 50, 0.6); /* Dark frosted glass */
+  table tbody tr td {
+    border: none;
+    padding: 0.3rem 0;
+  }
 }
