@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Library Management System</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header Section -->
+  <header id="headerSection">
+    <div class="logo">
+      <h1>Library Management System</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#books">Books</a></li>
+        <li><a href="#students">Students</a></li>
+        <li><a href="#borrowedBooks">Borrowed Books</a></li>
+        <li><a href="#search">Search</a></li>
+        <li><a href="#activityLog">Activity Log</a></li>
+      </ul>
+    </nav>
+    <button id="darkModeToggle">🌙 Dark Mode</button>
+  </header>
+
+  <!-- Dashboard Section -->
+  <section id="dashboard">
+    <h2>Dashboard</h2>
+    <div class="dashboard-stats">
+      <div class="stat">
+        <span>Total Books:</span>
+        <span id="totalBooks">0</span>
+      </div>
+      <div class="stat">
+        <span>Total Students:</span>
+        <span id="totalStudents">0</span>
+      </div>
+      <div class="stat">
+        <span>Borrowed Books:</span>
+        <span id="borrowedBooksCount">0</span>
+      </div>
+      <div class="stat">
+        <span>Total Fines:</span>
+        <span id="totalFines">$0</span>
+      </div>
+    </div>
+    <canvas id="analyticsChart" width="400" height="200"></canvas>
+  </section>
+
+  <!-- Calendar Section -->
+  <section id="calendarSection">
+    <h2>Calendar</h2>
+    <div id="calendar"></div>
+  </section>
+
+  <!-- Backup and Restore Section -->
+  <section id="backupRestore">
+    <h2>Backup and Restore</h2>
+    <div class="form-container">
+      <button id="exportDataBtn">Export Data</button>
+      <input type="file" id="importDataInput" accept=".json" style="display: none;">
+      <button id="importDataBtn">Import Data</button>
+    </div>
+  </section>
+
+  <!-- Book Management Section -->
+  <section id="books">
+    <h2>Book Management</h2>
+    <div class="form-container">
+      <form id="bookForm">
+        <h3>Add/Edit Book</h3>
+        <input type="text" id="bookId" placeholder="Book ID" readonly>
+        <input type="text" id="bookTitle" placeholder="Title" required>
+        <input type="text" id="bookAuthor" placeholder="Author" required>
+        <input type="number" id="bookYear" placeholder="Year Published" required>
+        <select id="bookCategory">
+          <option value="Fiction">Fiction</option>
+          <option value="Non-Fiction">Non-Fiction</option>
+          <option value="Science">Science</option>
+          <option value="History">History</option>
+          <option value="Other">Other</option>
+        </select>
+        <button type="submit">Save Book</button>
+      </form>
+    </div>
+    <div class="pagination-controls">
+      <button id="prevPageBooks">Previous</button>
+      <span id="currentPageBooks">Page 1</span>
+      <button id="nextPageBooks">Next</button>
+      <button id="printBooksBtn">Print</button>
+      <button id="scanBarcodeBtn">Scan Barcode</button>
+    </div>
+    <table id="bookTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable('bookTable', 0)">ID</th>
+          <th onclick="sortTable('bookTable', 1)">Title</th>
+          <th onclick="sortTable('bookTable', 2)">Author</th>
+          <th onclick="sortTable('bookTable', 3)">Year Published</th>
+          <th onclick="sortTable('bookTable', 4)">Category</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamic rows will be added here -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Student Management Section -->
+  <section id="students">
+    <h2>Student Management</h2>
+    <div class="form-container">
+      <form id="studentForm">
+        <h3>Add/Edit Student</h3>
+        <input type="text" id="studentId" placeholder="Student ID" readonly>
+        <input type="text" id="studentName" placeholder="Name" required>
+        <input type="email" id="studentEmail" placeholder="Email" required>
+        <input type="text" id="studentPhone" placeholder="Phone" required>
+        <button type="submit">Save Student</button>
+      </form>
+    </div>
+    <div class="pagination-controls">
+      <button id="prevPageStudents">Previous</button>
+      <span id="currentPageStudents">Page 1</span>
+      <button id="nextPageStudents">Next</button>
+      <button id="printStudentsBtn">Print</button>
+    </div>
+    <table id="studentTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable('studentTable', 0)">ID</th>
+          <th onclick="sortTable('studentTable', 1)">Name</th>
+          <th onclick="sortTable('studentTable', 2)">Email</th>
+          <th onclick="sortTable('studentTable', 3)">Phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamic rows will be added here -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Borrowed Books Section -->
+  <section id="borrowedBooks">
+    <h2>Borrowed Books</h2>
+    <div class="pagination-controls">
+      <button id="prevPageBorrowed">Previous</button>
+      <span id="currentPageBorrowed">Page 1</span>
+      <button id="nextPageBorrowed">Next</button>
+      <button id="printBorrowedBtn">Print</button>
+    </div>
+    <table id="borrowedTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable('borrowedTable', 0)">Book Title</th>
+          <th onclick="sortTable('borrowedTable', 1)">Student Name</th>
+          <th onclick="sortTable('borrowedTable', 2)">Borrow Date</th>
+          <th onclick="sortTable('borrowedTable', 3)">Due Date</th>
+          <th onclick="sortTable('borrowedTable', 4)">Return Date</th>
+          <th>Fine</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamic rows will be added here -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Notifications Section -->
+  <section id="notifications">
+    <h2>Notifications</h2>
+    <ul id="notificationList">
+      <!-- Notifications will appear here -->
+    </ul>
+  </section>
+
+  <!-- Advanced Search Section -->
+  <section id="search">
+    <h2>Advanced Search</h2>
+    <div class="search-container">
+      <input type="text" id="searchQuery" placeholder="Enter keyword..." list="searchSuggestions">
+      <datalist id="searchSuggestions">
+        <!-- Suggestions will be dynamically populated here -->
+      </datalist>
+      <select id="searchType">
+        <option value="book">Search Books</option>
+        <option value="student">Search Students</option>
+      </select>
+      <button id="searchButton">Search</button>
+    </div>
+    <div id="searchResults">
+      <h3>Search Results</h3>
+      <ul id="resultsList">
+        <!-- Search results will appear here -->
+      </ul>
+    </div>
+  </section>
+
+  <!-- Activity Log Section -->
+  <section id="activityLog">
+    <h2>Activity Log</h2>
+    <ul id="logList">
+      <!-- Activity log entries will appear here -->
+    </ul>
+  </section>
+
+  <!-- Scroll to Top Button -->
+  <button id="scrollToTopBtn"><i>&#8593;</i></button>
+
+  <!-- FullCalendar JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
